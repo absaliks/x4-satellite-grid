@@ -17,13 +17,17 @@ public class HelloApplication extends Application {
         // Create a new rectangle
         Rectangle rectangle = new Rectangle(50, 50, 100, 100);
         rectangle.setFill(Color.RED);
+        rectangle.setMouseTransparent(true);
 
         // Create a new pane and add the rectangle to it
         Pane root = new Pane();
+        root.setBackground(null);
+        root.setMouseTransparent(true);
         root.getChildren().add(rectangle);
 
         // Create a new scene and add the pane to it
         Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
 
         // Create a new stage and set the scene
         Stage stage = new Stage();
@@ -32,7 +36,6 @@ public class HelloApplication extends Application {
 
         // Make the stage always on top
         stage.setAlwaysOnTop(true);
-
         // Show the stage
         stage.show();
     }
