@@ -3,6 +3,7 @@ package absaliks.jfxdraw;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     public void start(Stage primaryStage) {
         // Create a new rectangle
-        Rectangle rectangle = new Rectangle(50, 50, 100, 100);
+        Rectangle rectangle = new Rectangle(0, 0, 100, 100);
         rectangle.setFill(Color.RED);
         rectangle.setMouseTransparent(true);
 
@@ -38,6 +39,18 @@ public class HelloApplication extends Application {
         stage.setAlwaysOnTop(true);
         // Show the stage
         stage.show();
+
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.HOME) {
+                root.setVisible(true);
+            }
+        });
+
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.HOME) {
+                root.setVisible(false);
+            }
+        });
     }
 
     public static void main(String[] args) {
