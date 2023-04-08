@@ -1,68 +1,76 @@
 package absaliks.jfxdraw;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
+import static absaliks.jfxdraw.Utils.circle;
+import static absaliks.jfxdraw.Utils.line;
 
 public class HelloApplication extends Application {
 
-    private Parent graphics() {
-        Group root = new Group();
-        root.setMouseTransparent(true);
+  private Parent graphics() {
+    Group root = new Group();
+    root.setMouseTransparent(true);
+    var children = root.getChildren();
 
-        // Create the large center circle
-        double centerX = 200; // X coordinate of the center point
-        double centerY = 200; // Y coordinate of the center point
-        double radius = 100; // Radius of the smaller circles
-        Circle centerCircle = new Circle(centerX, centerY, radius);
-        centerCircle.setStroke(Color.RED);
-        centerCircle.setFill(Color.TRANSPARENT);
+    // Create the large center circle
+    Point2D screenCenter = Utils.getScreenCenter();
 
-        // Create the smaller circles around the center circle
-        int numCircles = 5;
-        double angle = 0;
-        double angleStep = 2 * Math.PI / numCircles;
-        double distanceFromCenter = radius + 60;
+    double radius = 325; // Radius of the smaller circles
+    children.add(circle(screenCenter, radius, Color.RED));
 
-        for (int i = 0; i < numCircles; i++) {
-            double x = centerX + distanceFromCenter * Math.cos(angle);
-            double y = centerY + distanceFromCenter * Math.sin(angle);
-            Circle circle = new Circle(x, y, radius);
-            System.out.printf("x=%.1f, y=%.1f, r=%.1f%n", x, y, radius);
-            circle.setFill(Color.TRANSPARENT);
-            circle.setStroke(Color.BLUE);
-            root.getChildren().add(circle);
-            angle += angleStep;
-        }
-        return root;
+    // Create the smaller circles around the center circle
+    int numCircles = 6;
+    double angle = 0;
+    double angleStep = 2 * Math.PI / numCircles;
+    double distanceFromCenter = radius / 0.585;
+
+    for (int i = 0; i < numCircles; i++) {
+      Point2D satelliteCenter = new Point2D(
+          screenCenter.getX() + distanceFromCenter * Math.cos(angle),
+          screenCenter.getY() + distanceFromCenter * Math.sin(angle));
+      children.add(circle(satelliteCenter, radius, Color.YELLOW));
+      children.add(circle(satelliteCenter, 6, Color.BLACK));
+      children.add(circle(satelliteCenter, 4, Color.BLACK));
+      children.add(circle(satelliteCenter, 5, Color.WHITE));
+
+      angle += angleStep;
     }
 
-    public void start(Stage primaryStage) {
-        // Create a new scene and add the pane to it
-        Scene scene = new Scene(graphics(), 800, 800);
-        scene.setFill(Color.TRANSPARENT);
+    angle = 0;
+    angleStep = 60;
+    var lineLength = 1000;
+    for (int i = 0; i < 6; i++) {
+      Point2D lineDestination = new Point2D(
+          screenCenter.getX() + lineLength * Math.cos(angle * Math.PI / 180),
+          screenCenter.getY() + lineLength * Math.sin(angle * Math.PI / 180));
+      children.add(line(screenCenter, lineDestination, Color.WHITE));
+      angle += angleStep;
+    }
+    return root;
+  }
 
-        // Create a new stage and set the scene
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setScene(scene);
+  public void start(Stage primaryStage) {
+    // Create a new scene and add the pane to it
+    Scene scene = new Scene(graphics(), 800, 800);
+    scene.setFill(Color.TRANSPARENT);
 
-        // Make the stage always on top
-        stage.setAlwaysOnTop(true);
-        // Show the stage
-        stage.show();
+    // Create a new stage and set the scene
+    Stage stage = new Stage();
+    stage.setFullScreen(true);
+    stage.initStyle(StageStyle.TRANSPARENT);
+    stage.setScene(scene);
+
+    // Make the stage always on top
+    stage.setAlwaysOnTop(true);
+    // Show the stage
+    stage.show();
 
         /* Visibility
         scene.setOnKeyPressed(event -> {
@@ -76,9 +84,9 @@ public class HelloApplication extends Application {
                 stage.hide();
             }
         });*/
-    }
+  }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+  public static void main(String[] args) {
+    launch(args);
+  }
 }
