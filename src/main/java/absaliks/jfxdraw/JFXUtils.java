@@ -6,7 +6,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Screen;
 
-public class Utils {
+public class JFXUtils {
 
   public static Point2D getScreenCenter() {
     var screenBounds = Screen.getPrimary().getBounds();
