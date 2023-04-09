@@ -12,7 +12,7 @@ import java.util.HashSet;
 class KeyController {
 
   public static final int MOVE_DELTA_NORMAL = 1;
-  public static final int MOVE_DELTA_FAST = 3;
+  public static final int MOVE_DELTA_FAST = 5;
   public static final double SCALE_DELTA_NORMAL = 0.002;
   public static final double SCALE_DELTA_FAST = 0.01;
 
