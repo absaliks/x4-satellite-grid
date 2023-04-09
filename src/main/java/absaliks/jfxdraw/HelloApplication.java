@@ -2,43 +2,36 @@ package absaliks.jfxdraw;
 
 import absaliks.jfxdraw.graphics.MarkingLines;
 import javafx.application.Application;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class HelloApplication extends Application {
 
-  public void start(Stage primaryStage) {
-    // Create a new scene and add the pane to it
-    MarkingLines markingLines = new MarkingLines();
-    Scene scene = new Scene(markingLines.getShapesGroup(), 800, 800);
-    scene.setFill(Color.TRANSPARENT);
+  public static final State DEFAULT_STATE = new State(JFXUtils.getScreenCenter(), 1);
+  private final Property<State> state$ = new SimpleObjectProperty<>(DEFAULT_STATE);
+  private final KeyController keyController = new KeyController(state$);
 
-    // Create a new stage and set the scene
-    Stage stage = new Stage();
+
+  public void start(Stage primaryStage) {
+    var markingLines = new MarkingLines(state$.getValue());
+
+    var scene = new Scene(markingLines.getShapesGroup(), 800, 800);
+    scene.setFill(Color.TRANSPARENT);
+    scene.setOnKeyPressed(keyController::onKeyDown);
+    scene.setOnKeyReleased(keyController::onKeyUp);
+
+    var stage = new Stage();
     stage.setFullScreen(true);
     stage.initStyle(StageStyle.TRANSPARENT);
     stage.setScene(scene);
-
-    // Make the stage always on top
     stage.setAlwaysOnTop(true);
-    // Show the stage
     stage.show();
 
-//    Visibility
-    scene.setOnKeyPressed(event -> {
-      if (event.getCode() == KeyCode.HOME) {
-        stage.show();
-      }
-    });
-
-    scene.setOnKeyReleased(event -> {
-      if (event.getCode() == KeyCode.HOME) {
-        stage.hide();
-      }
-    });
+    state$.addListener((obs, oldValue, newValue) -> markingLines.update(newValue));
   }
 
   public static void main(String[] args) {

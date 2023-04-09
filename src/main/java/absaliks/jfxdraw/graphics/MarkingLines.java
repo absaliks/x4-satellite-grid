@@ -1,8 +1,6 @@
 package absaliks.jfxdraw.graphics;
 
-import absaliks.jfxdraw.JFXUtils;
 import absaliks.jfxdraw.State;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 
@@ -13,17 +11,14 @@ public class MarkingLines {
 
   public static final int SATELLITES_COUNT = 6;
 
-  private int radius = 300;
-
   private final List<MutableShape> mutableShapes = new ArrayList<>();
 
-  public MarkingLines() {
-    init();
+  public MarkingLines(State state) {
+    init(state);
   }
 
-  private void init() {
-    Point2D screenCenter = JFXUtils.getScreenCenter();
-    State state = new State(screenCenter, 1);
+  private void init(State state) {
+    final int radius = 300;
     mutableShapes.add(new RelativeCircle(state, radius, 0, 0, Color.RED));
 
     int angleStep = 360 / SATELLITES_COUNT;
@@ -37,6 +32,10 @@ public class MarkingLines {
 
     mutableShapes.add(new RelativeLine(state, 60, Color.AQUA));
     mutableShapes.add(new RelativeLine(state, 120, Color.AQUA));
+  }
+
+  public void update(State state) {
+    mutableShapes.forEach(shape -> shape.update(state));
   }
 
   public Group getShapesGroup() {
