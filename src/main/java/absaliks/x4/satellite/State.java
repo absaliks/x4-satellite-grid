@@ -6,6 +6,7 @@ public record State (
    Point2D center,
    double scale
 ) {
+  public static final State DEFAULT = new State(JFXUtils.getScreenCenter(), 1);
   
   public StateAdjuster toAdjuster() {
     return new StateAdjuster(center.getX(), center.getY(), scale);

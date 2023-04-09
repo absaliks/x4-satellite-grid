@@ -10,9 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class Main extends Application {
-
-  public static final State DEFAULT_STATE = new State(JFXUtils.getScreenCenter(), 1);
-  private final Property<State> state$ = new SimpleObjectProperty<>(DEFAULT_STATE);
+  private final Property<State> state$ = new SimpleObjectProperty<>(State.DEFAULT);
   private final KeyController keyController = new KeyController(state$);
 
 

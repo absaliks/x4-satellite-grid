@@ -19,7 +19,7 @@ class KeyController {
   private static final EnumSet<KeyCode> BOUND_KEYS = EnumSet.of(
       KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D,
       KeyCode.Q, KeyCode.E,
-      KeyCode.SHIFT);
+      KeyCode.SHIFT, KeyCode.HOME);
 
   private final HashSet<KeyCode> pressedKeys = new HashSet<>(BOUND_KEYS.size());
   private final SimpleBooleanProperty hasPressed = new SimpleBooleanProperty(false);
@@ -28,6 +28,8 @@ class KeyController {
     AnimationTimer animationTimer = new AnimationTimer() {
       @Override
       public void handle(long now) {
+        if (pressedKeys.contains(KeyCode.HOME)) state$.setValue(State.DEFAULT);
+
         var stateAdjuster = state$.getValue().toAdjuster();
 
         final var moveDelta = pressedKeys.contains(KeyCode.SHIFT) ? MOVE_DELTA_FAST : MOVE_DELTA_NORMAL;
