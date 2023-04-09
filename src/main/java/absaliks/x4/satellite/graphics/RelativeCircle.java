@@ -1,7 +1,7 @@
-package absaliks.jfxdraw.graphics;
+package absaliks.x4.satellite.graphics;
 
-import absaliks.jfxdraw.Geometry;
-import absaliks.jfxdraw.State;
+import absaliks.x4.satellite.Geometry;
+import absaliks.x4.satellite.State;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

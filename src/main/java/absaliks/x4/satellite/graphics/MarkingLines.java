@@ -1,6 +1,6 @@
-package absaliks.jfxdraw.graphics;
+package absaliks.x4.satellite.graphics;
 
-import absaliks.jfxdraw.State;
+import absaliks.x4.satellite.State;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 

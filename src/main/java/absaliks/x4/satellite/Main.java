@@ -1,6 +1,6 @@
-package absaliks.jfxdraw;
+package absaliks.x4.satellite;
 
-import absaliks.jfxdraw.graphics.MarkingLines;
+import absaliks.x4.satellite.graphics.MarkingLines;
 import javafx.application.Application;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class HelloApplication extends Application {
+public class Main extends Application {
 
   public static final State DEFAULT_STATE = new State(JFXUtils.getScreenCenter(), 1);
   private final Property<State> state$ = new SimpleObjectProperty<>(DEFAULT_STATE);

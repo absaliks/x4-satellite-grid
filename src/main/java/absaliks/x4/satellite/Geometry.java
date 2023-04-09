@@ -1,4 +1,4 @@
-package absaliks.jfxdraw;
+package absaliks.x4.satellite;
 
 import javafx.geometry.Point2D;
 
